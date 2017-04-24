@@ -3,7 +3,7 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Ejercito {
+public class Ejercito implements IAtaque,IDefensa {
     //Clase que contiene una coleccion de Objetos de tipo Soldado, con un respectivo Nombre para poder
     //asignarle un ejercito
 
@@ -41,5 +41,13 @@ public class Ejercito {
 
     public void setEjercito(String ejercito) {
         this.ejercito = ejercito;
+    }
+
+    public int atacar() {
+        return 0;
+    }
+
+    public int defender() {
+        return 0;
     }
 }
