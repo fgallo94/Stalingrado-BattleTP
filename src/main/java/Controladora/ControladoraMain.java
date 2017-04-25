@@ -37,8 +37,8 @@ public class ControladoraMain {
 
     public ControladoraMain() {
         //Seteo dos ejercitos que van a enfrentarse luego, se crean vacios y luego se le asignan soldados
-        ejercito1 = new Ejercito("Alemania");
-        ejercito2 = new Ejercito("Rusia");
+        ejercito1 = new Ejercito("Aleman");
+        ejercito2 = new Ejercito("Ruso");
         //Seteo todos los tipos de ataque disponible en Objetos padres de tipo "Ataques"
         ataqueAvion = new Avion();
         ataqueFusil = new Fusil();
@@ -69,11 +69,48 @@ public class ControladoraMain {
         ejercito1.add(s1);
         ejercito2.add(s2);
         ejercito2.add(s3);
+        enfrentar();
     }
 
-    public void enfrentar(){
+    private void enfrentar(){
+
+
        ataca= ejercito1.getLista();
+       int acumuladorAtaque1=0;
+       int acumuladorDefensa1=0;
+        System.out.printf("\n Alemanes \n");
+        for (Soldado s: ataca) {
+            acumuladorAtaque1+=s.getiAtaque();
+            acumuladorDefensa1+=s.getiDefensa();
+            System.out.printf("\n||||||||||");
+        }
+
        defiende= ejercito2.getLista();
+        int acumuladorAtaque2=0;
+        int acumuladorDefensa2=0;
+
+        System.out.printf("\n");
+        System.out.printf("\n");
+        System.out.printf("\n");
+        System.out.printf("\n");
+        System.out.printf("\n Rusos \n");
+        for (Soldado s: defiende) {
+            acumuladorAtaque2+=s.getiAtaque();
+            acumuladorDefensa2+=s.getiDefensa();
+            System.out.printf("\n|||||||||||");
+        }
+        System.out.printf("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
+        System.out.printf("\n ########     ALEMANES       #########");
+        System.out.printf("\n El ataque del ejercito %s fue de %d",ejercito1.getEjercito(),acumuladorAtaque1);
+        System.out.printf("\nLa defensa del ejercito %s fue de %d",ejercito1.getEjercito(),acumuladorDefensa1);
+        System.out.printf("\n ########     RUSOS       #########");
+        System.out.printf("\nEl ataque del ejercito %s fue de %d",ejercito2.getEjercito(),acumuladorAtaque2);
+        System.out.printf("\nLa defensa del ejercito %s fue de %d",ejercito1.getEjercito(),acumuladorDefensa2);
+
+
+
+
+
     }
 
 }
