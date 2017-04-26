@@ -6,7 +6,7 @@ public class Fusil extends Ataques {
 
     //Constructor por defecto, contiene un ataque de valor 5 y un nombre descriptivo
     public Fusil() {
-        super(5, "Rifle de Guerra");
+        super(15, "Rifle de Guerra");
 
     }
 

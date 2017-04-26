@@ -3,10 +3,10 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Ejercito  {
+public class Ejercito extends Thread {
     //Clase que contiene una coleccion de Objetos de tipo Soldado, con un respectivo Nombre para poder
     //asignarle un ejercito
-
+    CampoBatalla campoB;
     ArrayList<Soldado> lista;
     String ejercito;
 
@@ -14,12 +14,14 @@ public class Ejercito  {
     public Ejercito(ArrayList<Soldado> lista, String ejercito) {
         this.lista = lista;
         this.ejercito = ejercito;
+        this.campoB=null;
     }
 
     //Constructor con nombre de ejercito
     public Ejercito(String ejercito) {
         this.lista = new ArrayList<Soldado>();
         this.ejercito = ejercito;
+        this.campoB=null;
     }
 
     //Respectivos Get y Set para cada uno de los atributos de la clase
@@ -43,5 +45,23 @@ public class Ejercito  {
         this.ejercito = ejercito;
     }
 
+    public CampoBatalla getCampoB() {
+        return campoB;
+    }
 
+    public void setCampoB(CampoBatalla campoB) {
+        this.campoB = campoB;
+    }
+
+    public void run (){
+        while(!campoB.isTermino()){
+            try {
+
+                campoB.enfrentar(this.ejercito);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
