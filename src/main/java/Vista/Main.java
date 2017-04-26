@@ -9,6 +9,6 @@ public class Main {
         //Desde la vista se llama a la controladora correspondiente y se ejecuta el metodo "play"
         ControladoraMain ctrlMain= new ControladoraMain();
         ctrlMain.play();
-        //todo rehacer todo
+
     }
 }
