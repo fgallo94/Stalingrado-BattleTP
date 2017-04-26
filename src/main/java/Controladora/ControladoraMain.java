@@ -12,27 +12,28 @@ import Modelo.IDefensa;
 import Modelo.Soldado;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ControladoraMain {
     //declaro objetos a utilizar en la controladora
-    Ejercito ejercito1;
-    Ejercito ejercito2;
-    Ataques ataqueAvion;
-    Ataques ataqueFusil;
-    Ataques ataqueTanque;
-    Ataques ataqueCañon;
-    IAtaque ia1;
-    IAtaque ia2;
-    IAtaque ia3;
-    IAtaque ia4;
-    Defensa defensaCasco;
-    Defensa defensaChaleco;
-    Defensa defensaTanque;
-    IDefensa id1;
-    IDefensa id2;
-    IDefensa id3;
-    ArrayList<Soldado> ataca;
-    ArrayList<Soldado> defiende;
+    private Ejercito ejercito1;
+    private Ejercito ejercito2;
+    private Ataques ataqueAvion;
+    private Ataques ataqueFusil;
+    private Ataques ataqueTanque;
+    private Ataques ataqueCañon;
+    private IAtaque ia1;
+    private IAtaque ia2;
+    private IAtaque ia3;
+    private IAtaque ia4;
+    private Defensa defensaCasco;
+    private Defensa defensaChaleco;
+    private Defensa defensaTanque;
+    private IDefensa id1;
+    private IDefensa id2;
+    private IDefensa id3;
+    private ArrayList<Soldado> ataca;
+    private ArrayList<Soldado> defiende;
 
 
     public ControladoraMain() {
@@ -85,8 +86,6 @@ public class ControladoraMain {
             System.out.printf("\n||||||||||");
         }
 
-        //funcion que crea espacios en la consola
-        saltoLinea();
 
         //Traigo el ataque y la defensa total de cada uno de los soldados en el ejercito2 y los acumulo
         defiende = ejercito2.getLista();
@@ -98,6 +97,7 @@ public class ControladoraMain {
             acumuladorDefensa2 += s.getiDefensa();
             System.out.printf("\n|||||||||||");
         }
+        //funcion que crea espacios en la consola
 
         saltoLinea();
 
@@ -111,35 +111,31 @@ public class ControladoraMain {
         System.out.printf("\nEl ataque del ejercito %s fue de %d", ejercito2.getEjercito(), acumuladorAtaque2);
         System.out.printf("\nLa defensa del ejercito %s fue de %d", ejercito1.getEjercito(), acumuladorDefensa2);
 
-        saltoLinea();
+
         int dañoCausado1 = acumuladorAtaque1 - acumuladorDefensa2; //daño causado de alemania
         int dañoCausado2 = acumuladorAtaque2 - acumuladorDefensa1; //daño causado de rusia
 
         //Llamada a funciones que imprimen resultados de bajas como ademas eliminan de las listas
         // los soldados muertos
         resultadoBatalla(ejercito1, dañoCausado2);
-        saltoLinea();
         resultadoBatalla(ejercito2, dañoCausado1);
 
         //Condicional para saber como continua nuestra batalla
-        if((ejercito1.getLista()==null)&&(ejercito2.getLista()==null)){
+        if ((ejercito1.getLista().size()==0) && (ejercito2.getLista().size()==0)) {
             System.out.printf("\n AMBOS EJERCITOS MURIERON, FUE UN EMPATE");
-        }
-        else if(ejercito1.getLista()==null){
-            System.out.printf("\n GANO EL EJERCITO %s",ejercito2.getEjercito());
-        }
-        else if(ejercito2.getLista()==null){
-            System.out.printf("\n GANO EL EJERCITO %s",ejercito1.getEjercito());
-        }
-        else{
+        } else if (ejercito1.getLista().size()==0) {
+            System.out.printf("\n GANO EL EJERCITO %s", ejercito2.getEjercito());
+        } else if (ejercito2.getLista().size()==0) {
+            System.out.printf("\n GANO EL EJERCITO %s", ejercito1.getEjercito());
+        } else {
             enfrentar(); //llamada recursiva en caso de que ambos ejercitos sigan con vida
         }
 
-        }
+    }
 
 
-        //Funcion que crea espacios en la consola, meramente visual
-    public void saltoLinea() {
+    //Funcion que crea espacios en la consola, meramente visual
+    private void saltoLinea() {
         System.out.printf("\n");
         System.out.printf("\n");
         System.out.printf("\n");
@@ -153,18 +149,21 @@ public class ControladoraMain {
     //que nuestro soldado resulto herido, ahora ese soldado tiene menos vida y se descuenta del dañoTotal, ademas
     //suma 1 en acumuladorDañados
 
-    //Luego muestra por pantalla en caso de que existan, los muertos y los heridos en batalla
-    public void resultadoBatalla(Ejercito e, int dañoTotal) {
+    //Luego muestra por pantalla en caso de que exista
+    private void resultadoBatalla(Ejercito e, int dañoTotal) {
         ArrayList<Soldado> lista = e.getLista();
         int acumuladorMuertes = 0;
         int acumuladorDañados = 0;
-        for (Soldado s : lista) {
+        Iterator iterator = e.getLista().iterator();
+        while (iterator.hasNext()) {
             if (dañoTotal > 0) {
                 if (dañoTotal >= 10) {
+                    Soldado s = (Soldado) iterator.next();
                     dañoTotal -= s.getVida();
-                    lista.remove(s);
+                    iterator.remove();
                     acumuladorMuertes++;
                 } else {
+                    Soldado s = (Soldado) iterator.next();
                     s.setVida((s.getVida() - dañoTotal));
                     dañoTotal -= s.getVida();
                     acumuladorDañados++;
@@ -172,11 +171,11 @@ public class ControladoraMain {
             }
         }
         e.setLista(lista);
-        if(acumuladorMuertes!=0) {
-            System.out.printf("\n Muertes ejercito %s: %d  \n", e.getEjercito(),acumuladorMuertes);
+        if (acumuladorMuertes != 0) {
+            System.out.printf("\n Muertes ejercito %s: %d  \n", e.getEjercito(), acumuladorMuertes);
         }
         if (acumuladorDañados != 0) {
-            System.out.printf("\n Heridos ejercito %s: %d \n",e.getEjercito(), acumuladorDañados);
+            System.out.printf("\n Heridos ejercito %s: %d \n", e.getEjercito(), acumuladorDañados);
         }
     }
 
