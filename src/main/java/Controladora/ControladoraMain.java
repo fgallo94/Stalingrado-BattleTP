@@ -63,13 +63,17 @@ public class ControladoraMain {
     public void play() {
         //Cargo diferentes tipos de soldados con ataques y defensas diferentes
         //para realizar una serie de pruebas
+
+        //TODO corregir en caso de empate ataque y defensa
         Soldado s1 = new Soldado(ia1, id1);  //Tiene ataque de Avion, se defiende con Casco
         Soldado s2 = new Soldado(ia2, id2); //Tiene ataque con Fusil, se defiende con Chaleco
         Soldado s3 = new Soldado(ia2, id1);  //Tiene ataque con Fusil, se defiende con Casco
+        Soldado s4= new Soldado(ia3,id3);
         //Agrego soldados a los ejercitos
         ejercito1.add(s1);
         ejercito2.add(s2);
         ejercito2.add(s3);
+
         enfrentar();
     }
 
@@ -115,22 +119,57 @@ public class ControladoraMain {
         int dañoCausado1 = acumuladorAtaque1 - acumuladorDefensa2; //daño causado de alemania
         int dañoCausado2 = acumuladorAtaque2 - acumuladorDefensa1; //daño causado de rusia
 
-        //Llamada a funciones que imprimen resultados de bajas como ademas eliminan de las listas
-        // los soldados muertos
-        resultadoBatalla(ejercito1, dañoCausado2);
-        resultadoBatalla(ejercito2, dañoCausado1);
+        //Llamada a funciones que imprimen resultados de bajas
+        resultadoBatallaSinRemover(ejercito1,dañoCausado2);
+        resultadoBatallaSinRemover(ejercito2,dañoCausado1);
 
-        //Condicional para saber como continua nuestra batalla
-        if ((ejercito1.getLista().size()==0) && (ejercito2.getLista().size()==0)) {
-            System.out.printf("\n AMBOS EJERCITOS MURIERON, FUE UN EMPATE");
-        } else if (ejercito1.getLista().size()==0) {
-            System.out.printf("\n GANO EL EJERCITO %s", ejercito2.getEjercito());
-        } else if (ejercito2.getLista().size()==0) {
-            System.out.printf("\n GANO EL EJERCITO %s", ejercito1.getEjercito());
-        } else {
-            enfrentar(); //llamada recursiva en caso de que ambos ejercitos sigan con vida
+        mostrarContadorFinal(ejercito1,ejercito2);
+
+    }
+    //Funcion que decide como sigue la batalla, en caso de que ambos mueran, o alguno de ellos muera, se muestra
+    //quien gano y los contadores de las muertes de cada uno de ellos
+    private void mostrarContadorFinal(Ejercito e1, Ejercito e2){
+        int acumuladorMuertes1=0;
+        int acumuladorVivos1=0;
+        for (Soldado s:e1.getLista()) {
+            if(s.getEstado()==0){
+                acumuladorMuertes1++;
+            }
+            else{
+                acumuladorVivos1++;
+            }
         }
 
+        int acumuladorMuertes2=0;
+        int acumuladorVivos2=0;
+        for (Soldado s:e2.getLista()) {
+            if(s.getEstado()==0){
+                acumuladorMuertes2++;
+            }
+            else{
+                acumuladorVivos2++;
+            }
+        }
+
+        if((acumuladorVivos1==0)&&(acumuladorVivos2==0)){
+            System.out.printf("\nAmbos ejercitos murieron en batalla\n");
+            System.out.printf("\n Contador:\n");
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e1.getEjercito(),acumuladorMuertes1,acumuladorVivos1);
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e2.getEjercito(),acumuladorMuertes2,acumuladorVivos2);
+
+        }else if(acumuladorVivos1==0){
+            System.out.printf("\n Gano el ejercito %s", e1.getEjercito());
+            System.out.printf("\n Contador:\n");
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e1.getEjercito(),acumuladorMuertes1,acumuladorVivos1);
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e2.getEjercito(),acumuladorMuertes2,acumuladorVivos2);
+        }else if(acumuladorVivos2==0){
+            System.out.printf("\n Gano el ejercito %s", e1.getEjercito());
+            System.out.printf("\n Contador:\n");
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e1.getEjercito(),acumuladorMuertes1,acumuladorVivos1);
+            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n",e2.getEjercito(),acumuladorMuertes2,acumuladorVivos2);
+        }else{
+            enfrentar();
+        }
     }
 
 
@@ -171,6 +210,31 @@ public class ControladoraMain {
             }
         }
         e.setLista(lista);
+        if (acumuladorMuertes != 0) {
+            System.out.printf("\n Muertes ejercito %s: %d  \n", e.getEjercito(), acumuladorMuertes);
+        }
+        if (acumuladorDañados != 0) {
+            System.out.printf("\n Heridos ejercito %s: %d \n", e.getEjercito(), acumuladorDañados);
+        }
+    }
+
+
+    private void resultadoBatallaSinRemover(Ejercito e, int dañoTotal) {
+        int acumuladorMuertes = 0;
+        int acumuladorDañados = 0;
+        for (Soldado s: e.getLista()) {
+            if (dañoTotal > 0) {
+                if (dañoTotal >= 10) {
+                    dañoTotal -= s.getVida();
+                    s.setEstado(0);
+                    acumuladorMuertes++;
+                } else {
+                    s.setVida((s.getVida() - dañoTotal));
+                    dañoTotal -= s.getVida();
+                    acumuladorDañados++;
+                }
+            }
+        }
         if (acumuladorMuertes != 0) {
             System.out.printf("\n Muertes ejercito %s: %d  \n", e.getEjercito(), acumuladorMuertes);
         }

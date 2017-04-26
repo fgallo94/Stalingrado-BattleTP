@@ -9,12 +9,14 @@ public class Soldado {
     //iniciar sin comportamientos como tambien inicializarlos ya asignandole interfaces
     private int vida;
     private int defensa;
+    private int estado; //1 vivo y 0 muerto
 
 
     //Constructor sin parametros
     public Soldado() {
         vida = 10;
         defensa = 5;
+        estado=1;
     }
 
     //Constructor con interfaces de ataque y defensa
@@ -23,6 +25,7 @@ public class Soldado {
         defensa = 5;
         iAtaque = ia;
         iDefensa = id;
+        estado=1;
     }
 
     //Respectivos Get y Set para cada Atributo de la clase
@@ -44,6 +47,14 @@ public class Soldado {
 
     public int getVida() {
         return vida;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
     public void setVida(int vida) {
