@@ -1,7 +1,9 @@
 package Modelo;
 
 
-public class CampoBatalla {
+import java.util.Observable;
+
+public class CampoBatalla extends Observable{
     private Ejercito ejer1;
     private Ejercito ejer2;
     private Ejercito atacanteG;
@@ -42,11 +44,13 @@ public class CampoBatalla {
         }
         disponible = false;
         if (nombre.equals(ejer1.getEjercito())) {
-            System.out.printf("entro aleman");
+            setChanged();
+            notifyObservers("entro aleman");
             atacanteG = ejer1;
             defensorG = ejer2;
         } else {
-            System.out.printf("entro ruso");
+            setChanged();
+            notifyObservers("entro ruso");
             atacanteG = ejer2;
             defensorG = ejer1;
 
@@ -61,7 +65,6 @@ public class CampoBatalla {
         int ataque = traerAtaque();
         int defensa = traerDefensa();
         saltoLinea();
-        System.out.printf("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
         mostrarAtaqueTurno(ataque, defensa);
         int dañoCausado = ataque - defensa;
         resultadoBatallaSinRemover(defensorG, dañoCausado);
@@ -71,11 +74,13 @@ public class CampoBatalla {
 
     private synchronized int traerAtaque() {
         int acumuladorAtaque = 0;
-        System.out.printf("\n %s \n", atacanteG.getEjercito());
+        setChanged();
+        notifyObservers(" "+atacanteG.getEjercito()+"\n");
         for (Soldado s : atacanteG.getLista()) {
             if (s.getEstado() != 0) {
                 acumuladorAtaque += s.getiAtaque();
-                System.out.printf("\n |||||||||||\n");
+                setChanged();
+                notifyObservers("\n |||||||||||\n");
             }
         }
         return acumuladorAtaque;
@@ -83,11 +88,13 @@ public class CampoBatalla {
 
     private synchronized int traerDefensa() {
         int acumuladorDefensa = 0;
-        System.out.printf("\n %s \n", defensorG.getEjercito());
+        setChanged();
+        notifyObservers(" "+defensorG.getEjercito()+"\n");
         for (Soldado s : defensorG.getLista()) {
             if (s.getEstado() != 0) {
                 acumuladorDefensa += s.getiDefensa();
-                System.out.printf("\n |||||||||||\n");
+                setChanged();
+                notifyObservers("\n |||||||||||\n");
             }
         }
         return acumuladorDefensa;
@@ -97,10 +104,12 @@ public class CampoBatalla {
     private synchronized void mostrarAtaqueTurno(int acumA, int acumD) {
 
         //Salida por pantalla de los ataques y defensas
-
-        System.out.printf("\n ########     %s       #########", atacanteG.getEjercito());
-        System.out.printf("\n El ataque del ejercito %s fue de %d", atacanteG.getEjercito(), acumA);
-        System.out.printf("\nLa defensa del otro ejercito fue de %d", acumD);
+        setChanged();
+        notifyObservers(" "+atacanteG.getEjercito()+"\n");
+        setChanged();
+        notifyObservers("\n El ataque del ejercito "+atacanteG.getEjercito()+  "fue de "+ acumA);
+        setChanged();
+        notifyObservers("\n La defensa del otro ejercito fue de "+ acumD);
 
     }
 
@@ -128,40 +137,67 @@ public class CampoBatalla {
         }
 
         if ((acumuladorVivos1 == 0) && (acumuladorVivos2 == 0)) {
-            System.out.printf("\nAmbos ejercitos murieron en batalla\n");
-            System.out.printf("\n Contador:\n");
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer1.getEjercito(), acumuladorMuertes1, acumuladorVivos1);
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer2.getEjercito(), acumuladorMuertes2, acumuladorVivos2);
+            setChanged();
+            notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
+            setChanged();
+            notifyObservers("\nAmbos ejercitos murieron en batalla\n");
+            setChanged();
+            notifyObservers("\n Contador:\n");
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
             this.termino=true;
         } else if (acumuladorVivos1 == 0) {
-            System.out.printf("\n Gano el ejercito %s", ejer2.getEjercito());
-            System.out.printf("\n Contador:\n");
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer1.getEjercito(), acumuladorMuertes1, acumuladorVivos1);
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer2.getEjercito(), acumuladorMuertes2, acumuladorVivos2);
+            setChanged();
+            notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
+            setChanged();
+            notifyObservers("\n Gano el ejercito "+ ejer2.getEjercito());
+            setChanged();
+            notifyObservers("\n Contador:\n");
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
             this.termino=true;
         } else if (acumuladorVivos2 == 0) {
-            System.out.printf("\n Gano el ejercito %s", ejer1.getEjercito());
-            System.out.printf("\n Contador:\n");
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer1.getEjercito(), acumuladorMuertes1, acumuladorVivos1);
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer2.getEjercito(), acumuladorMuertes2, acumuladorVivos2);
+            setChanged();
+            notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
+            setChanged();
+            notifyObservers("\n Gano el ejercito "+ ejer1.getEjercito());
+            setChanged();
+            notifyObservers("\n Contador:\n");
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
             this.termino = true;
         } else {
-            System.out.printf("\n La batalla continua");
-            System.out.printf("\n Contador:\n");
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer1.getEjercito(), acumuladorMuertes1, acumuladorVivos1);
-            System.out.printf("\n Ejercito %s \n Muertes: %d \n Vivos: %d \n", ejer2.getEjercito(), acumuladorMuertes2, acumuladorVivos2);
+            setChanged();
+            notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
+            setChanged();
+            notifyObservers("\n La batalla continua");
+            setChanged();
+            notifyObservers("\n Contador:\n");
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            setChanged();
+            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
 
 
         }
     }
 
-
     //Funcion que crea espacios en la consola, meramente visual
     private void saltoLinea() {
-        System.out.printf("\n");
-        System.out.printf("\n");
-        System.out.printf("\n");
-        System.out.printf("\n");
+        setChanged();
+        notifyObservers("\n");
+        setChanged();
+        notifyObservers("\n");
+        setChanged();
+        notifyObservers("\n");
+        setChanged();
+        notifyObservers("\n");
     }
 
     //Recibe como parametro un ejercito y el daño que recibio, crea una lista auxiliar, utiliza acumulador de muertes
@@ -196,10 +232,12 @@ public class CampoBatalla {
             }
         }
         if (acumuladorMuertes != 0) {
-            System.out.printf("\n Muertes ejercito %s: %d  \n", e.getEjercito(), acumuladorMuertes);
+            setChanged();
+            notifyObservers("\n Muertes ejercito "+e.getEjercito()+": "+ acumuladorMuertes+ " \n" );
         }
         if (acumuladorDañados != 0) {
-            System.out.printf("\n Heridos ejercito %s: %d \n", e.getEjercito(), acumuladorDañados);
+            setChanged();
+            notifyObservers("\n Heridos ejercito "+e.getEjercito()+ " : "+acumuladorDañados+ "\n" );
         }
     }
 

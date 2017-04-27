@@ -7,6 +7,7 @@ import Modelo.Defensas.BlindajeTanque;
 import Modelo.Defensas.Casco;
 import Modelo.Defensas.Chaleco;
 import Modelo.Defensas.Defensa;
+import Vista.Odin;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +37,8 @@ public class ControladoraMain {
     public ControladoraMain() {
         //Seteo dos ejercitos que van a enfrentarse luego, se crean vacios y luego se le asignan soldados
         CampoBatalla campoB = new CampoBatalla();
+        Odin o=new Odin();
+        campoB.addObserver(o);
         ejercito1 = new Ejercito("Aleman");
         ejercito2 = new Ejercito("Ruso");
         campoB.setEjer1(ejercito1);
