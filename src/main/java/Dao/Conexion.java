@@ -27,7 +27,7 @@ public class Conexion {
 
     public void conectar() throws SQLException {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Stalingrado", "root", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Stalingrado", "root", "fede432405");
         } catch (SQLException e) {
             System.err.println("SQLexception: " + e.getMessage());
             throw e;
