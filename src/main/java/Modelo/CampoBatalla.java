@@ -46,24 +46,20 @@ public class CampoBatalla extends Observable{
         }
         disponible = false;
         if (nombre.equals(ejer1.getEjercito())) {
-            setChanged();
-            notifyObservers("entro aleman");
             atacanteG = ejer1;
             defensorG = ejer2;
         } else {
-            setChanged();
-            notifyObservers("entro ruso");
             atacanteG = ejer2;
             defensorG = ejer1;
 
         }
         atacar();
         disponible = true;
-        notifyAll();
+        notify();
     }
 
     private synchronized void atacar() {
-
+    if (!termino) {
         int ataque = traerAtaque();
         int defensa = traerDefensa();
         saltoLinea();
@@ -71,7 +67,7 @@ public class CampoBatalla extends Observable{
         int dañoCausado = ataque - defensa;
         resultadoBatallaSinRemover(defensorG, dañoCausado);
         mostrarContadorFinal();
-
+        }
     }
 
     private synchronized int traerAtaque() {
@@ -161,8 +157,9 @@ public class CampoBatalla extends Observable{
             notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
             setChanged();
             notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
-
             this.termino=true;
+            setChanged();
+            notifyObservers(ejer2);
 
         } else if (acumuladorVivos2 == 0) {
             setChanged();
@@ -175,8 +172,9 @@ public class CampoBatalla extends Observable{
             notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
             setChanged();
             notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
-
             this.termino = true;
+            setChanged();
+            notifyObservers(ejer1);
 
         } else {
             setChanged();

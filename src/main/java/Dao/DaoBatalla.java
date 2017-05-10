@@ -14,7 +14,7 @@ public class DaoBatalla {
 
         public void guardarResultado (Ejercito e,int muertesAlemania,int muertesRusia) throws Exception{
             String sq = "insert into Logs(descripcion,muertes_alemania,muertes_rusia) values (?,?,?)";
-            String ej= "Gano "+e.getEjercito();
+            String ej= ("Gano "+e.getEjercito());
 
             try{
                 conn.conectar();
@@ -22,6 +22,7 @@ public class DaoBatalla {
                 st.setString(1,ej);
                 st.setInt(2,muertesAlemania);
                 st.setInt(3,muertesRusia);
+                st.executeUpdate();
 
             }catch (SQLException es){
                 es.printStackTrace();
