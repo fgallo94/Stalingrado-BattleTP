@@ -11,6 +11,7 @@ import Vista.Odin;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class ControladoraMain {
     //declaro objetos a utilizar en la controladora
@@ -69,7 +70,6 @@ public class ControladoraMain {
         //Cargo diferentes tipos de soldados con ataques y defensas diferentes
         //para realizar una serie de pruebas
 
-        //TODO corregir en caso de empate ataque y defensa
         Soldado s1 = new Soldado(ia2, id1);  //Tiene ataque con Fusil, se defiende con Casco
         Soldado s2 = new Soldado(ia2, id2); //Tiene ataque con Fusil, se defiende con Chaleco
         Soldado s3 = new Soldado(ia2, id1);  //Tiene ataque con Fusil, se defiende con Casco
@@ -81,9 +81,16 @@ public class ControladoraMain {
         ejercito1.add(s4);
 
         //Comienza la ejecucion de los Hilos
-        ejercito1.start();
-        ejercito2.start();
+        Random rand = new Random(System.currentTimeMillis());
+        Random rand2 = new Random(System.currentTimeMillis()+100);
 
-    }
+        if(rand.nextInt()<rand2.nextInt()){
+            ejercito1.start();
+            ejercito2.start();
+        }else{
+            ejercito2.start();
+            ejercito1.start();
+        }
+        }
 
 }
