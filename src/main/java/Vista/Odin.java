@@ -42,7 +42,7 @@ public class Odin implements Observer {
             System.out.println(o);
         }else if(o instanceof Ejercito){
             Ejercito aux = (Ejercito)o;
-            if (aux.getEjercito() == "Alemania"){
+            if (aux.getEjercito() == "Aleman"){
                 try {
                     dao.guardarResultado(aux, 0, 2);
                 }catch (Exception z) {
