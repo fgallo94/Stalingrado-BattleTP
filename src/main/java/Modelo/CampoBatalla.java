@@ -102,6 +102,11 @@ public class CampoBatalla extends Observable{
                 notifyObservers("\n |||||||||||\n");
             }
         }
+        if(atacanteG.getEjercito() == "Alemania"){
+            setChanged();
+            notifyObservers("BONUS DE ATAQUE POR SER NAZI Y COMER LEVERWURST \n");
+            return acumuladorAtaque+5;
+        }
         return acumuladorAtaque;
     }
     //Metodo para traer defensa del defensor, tiene ademas salida por pantalla mediante el notifyObservers(), trae la defensa
@@ -116,6 +121,11 @@ public class CampoBatalla extends Observable{
                 setChanged();
                 notifyObservers("\n |||||||||||\n");
             }
+        }
+        if(defensorG.getEjercito() == "Rusia"){
+            setChanged();
+            notifyObservers("BONUS DE DEFENSA POR SER RUSO Y TOMAR VODKA \n");
+            return acumuladorDefensa+5;
         }
         return acumuladorDefensa;
     }
