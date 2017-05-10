@@ -2,6 +2,7 @@ package Vista;
 
 import Dao.DaoBatalla;
 import Modelo.Ejercito;
+import Modelo.Soldado;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,14 +44,30 @@ public class Odin implements Observer {
         }else if(o instanceof Ejercito){
             Ejercito aux = (Ejercito)o;
             if (aux.getEjercito() == "Aleman"){
+                int acumuladorMuertes=0;
                 try {
-                    dao.guardarResultado(aux, 0, 2);
+                    ArrayList<Soldado> auxSoldado=aux.getLista();
+                    for(Soldado s : auxSoldado) {
+                           if(s.getEstado()==0){
+                               acumuladorMuertes+=1;
+                           }
+                    }
+
+                    dao.guardarResultado(aux, acumuladorMuertes, 2);
                 }catch (Exception z) {
                     z.printStackTrace();
                 }
             }else{
                 try {
-                    dao.guardarResultado(aux, 2, 0);
+                    int acumuladorMuertes=0;
+                    ArrayList<Soldado> auxSoldado=aux.getLista();
+                    for(Soldado s : auxSoldado) {
+                        if(s.getEstado()==0){
+                            acumuladorMuertes+=1;
+                        }
+                    }
+
+                    dao.guardarResultado(aux, 2, acumuladorMuertes);
                 }catch (Exception z) {
                     z.printStackTrace();
                 }
@@ -58,3 +75,4 @@ public class Odin implements Observer {
         }
     }
 }
+

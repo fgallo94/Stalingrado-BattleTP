@@ -66,7 +66,7 @@ public class CampoBatalla extends Observable{
     //Metodo que duerme el Thread de 2 seg a 1
     private synchronized void sleepThread(){
         Random rand = new Random();
-        int rando = rand.nextInt(2000) + 1000;
+        int rando = rand.nextInt(2500) + 1000;
                 try{
                     Thread.sleep(rando);
                 }catch(Exception e){
