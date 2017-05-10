@@ -102,7 +102,7 @@ public class CampoBatalla extends Observable{
                 notifyObservers("\n |||||||||||\n");
             }
         }
-        if(atacanteG.getEjercito() == "Alemania"){
+        if(atacanteG.getEjercito().equals("Aleman")){
             setChanged();
             notifyObservers("BONUS DE ATAQUE POR SER NAZI Y COMER LEVERWURST \n");
             return acumuladorAtaque+5;
@@ -122,7 +122,7 @@ public class CampoBatalla extends Observable{
                 notifyObservers("\n |||||||||||\n");
             }
         }
-        if(defensorG.getEjercito() == "Rusia"){
+        if(defensorG.getEjercito().equals("Ruso")){
             setChanged();
             notifyObservers("BONUS DE DEFENSA POR SER RUSO Y TOMAR VODKA \n");
             return acumuladorDefensa+5;

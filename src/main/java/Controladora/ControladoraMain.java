@@ -80,11 +80,11 @@ public class ControladoraMain {
         ejercito2.add(s3);
         ejercito1.add(s4);
 
-        //Comienza la ejecucion de los Hilos
+        //Comienza la ejecucion de los Hilos con random basado en los milisegundos del reloj, tratando de hacer aleatorio el ingreso
+        //del primer thread
         Random rand = new Random(System.currentTimeMillis());
-        Random rand2 = new Random(System.currentTimeMillis()+100);
 
-        if(rand.nextInt()<rand2.nextInt()){
+        if(rand.nextInt()<rand.nextInt()+100){
             ejercito1.start();
             ejercito2.start();
         }else{

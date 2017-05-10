@@ -33,6 +33,12 @@ public class Odin implements Observer {
     public void update(Observable observable, Object o) {
 
         if(o instanceof String){
+
+            try{
+                Thread.sleep(500);
+            }catch(Exception es){
+                es.printStackTrace();
+            }
             System.out.println(o);
         }else if(o instanceof Ejercito){
             Ejercito aux = (Ejercito)o;
