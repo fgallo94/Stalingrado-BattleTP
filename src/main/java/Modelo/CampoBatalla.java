@@ -11,6 +11,8 @@ public class CampoBatalla extends Observable{
     private boolean termino;
     private boolean disponible;
 
+
+
     public CampoBatalla() {
         ejer1 = null;
         ejer2 = null;
@@ -159,7 +161,9 @@ public class CampoBatalla extends Observable{
             notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
             setChanged();
             notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
+
             this.termino=true;
+
         } else if (acumuladorVivos2 == 0) {
             setChanged();
             notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
@@ -171,7 +175,9 @@ public class CampoBatalla extends Observable{
             notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
             setChanged();
             notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
+
             this.termino = true;
+
         } else {
             setChanged();
             notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");

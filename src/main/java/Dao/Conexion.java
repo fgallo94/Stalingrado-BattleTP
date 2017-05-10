@@ -1,14 +1,18 @@
 package Dao;
 
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 public class Conexion {
     private Connection conn;
+    private Statement st;
+    private static Conexion instancia;
 
-    static Conexion instancia;
 
     public static Conexion getInstancia() {
         if (instancia == null) {
@@ -17,9 +21,12 @@ public class Conexion {
         return instancia;
     }
 
-    protected Conexion() {
+    public Conexion() {
         try {
+
             this.verificarDriver();
+           
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -34,7 +41,7 @@ public class Conexion {
         }
     }
 
-    public void verificarDriver() throws ClassNotFoundException {
+    private void verificarDriver() throws ClassNotFoundException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {

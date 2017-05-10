@@ -56,7 +56,6 @@ public class Ejercito extends Thread {
     public void run (){
         while(!campoB.isTermino()){
             try {
-
                 campoB.enfrentar(this.ejercito);
             } catch (InterruptedException e) {
                 e.printStackTrace();
