@@ -2,7 +2,8 @@ package Modelo;
 
 
 import java.util.Observable;
-
+import java.util.Random;
+//clase que extiende de Observable
 public class CampoBatalla extends Observable{
     private Ejercito ejer1;
     private Ejercito ejer2;
@@ -12,14 +13,14 @@ public class CampoBatalla extends Observable{
     private boolean disponible;
 
 
-
+    //Constructor que setea null y condiciones por defecto a los booleans
     public CampoBatalla() {
         ejer1 = null;
         ejer2 = null;
         termino = false;
         disponible = true;
     }
-
+    //Respectivos getters and setters
     public Ejercito getEjer1() {
         return ejer1;
     }
@@ -39,7 +40,10 @@ public class CampoBatalla extends Observable{
     boolean isTermino() {
         return termino;
     }
-
+    //Metodo sincronizado que recibe a los Threads, en caso de que el boolean disponible sea igual a True ingresa y setea
+    //ese disponible en false,si ingresa aleman, aleman ataca y defiende rusia, en caso contrario se invierte
+    // hace una llamada al metodo atacar, llama al metodo sleepThread y notifica a los demas Threads cuando
+    //termina sus tareas
     synchronized void enfrentar(String nombre) throws InterruptedException {
         while (!disponible) {
             wait();
@@ -55,9 +59,25 @@ public class CampoBatalla extends Observable{
         }
         atacar();
         disponible = true;
-        notify();
+        sleepThread();
+        notifyAll();
     }
 
+    //Metodo que duerme el Thread de 2 seg a 1
+    private synchronized void sleepThread(){
+        Random rand = new Random();
+        int rando = rand.nextInt(2000) + 1000;
+                try{
+                    Thread.sleep(rando);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+    }
+
+    //Metodo atacar, compara si la batalla no finalizo para hacer sus respectivas tareas, si no finalizo, trae el ataque del agresot
+    //la defensa del defensor, hace llamada a saltoLinea(), llama al metodo mostrarAtaqueTurno() que nos da resultado parcial de la batalla,
+    //guarda en un int el daño del agresor y llama a resultadoBatallaSinRemover() enviando el defensor y los puntos de daño
+    // para finalizar llama mostrarContadorFinal() que nos dice como va la batalla y si finalizo
     private synchronized void atacar() {
     if (!termino) {
         int ataque = traerAtaque();
@@ -69,7 +89,8 @@ public class CampoBatalla extends Observable{
         mostrarContadorFinal();
         }
     }
-
+    //Metodo para traer ataque del atacante, tiene ademas salida por pantalla mediante notifyObservers(), trae el ataque de
+    //cada uno de los soldados de nuestro ejercito, y retorna ese acumulador
     private synchronized int traerAtaque() {
         int acumuladorAtaque = 0;
         setChanged();
@@ -83,7 +104,8 @@ public class CampoBatalla extends Observable{
         }
         return acumuladorAtaque;
     }
-
+    //Metodo para traer defensa del defensor, tiene ademas salida por pantalla mediante el notifyObservers(), trae la defensa
+    //de cada uno de los soldados de nuestro ejercito y retorna el acumulador
     private synchronized int traerDefensa() {
         int acumuladorDefensa = 0;
         setChanged();
@@ -98,10 +120,10 @@ public class CampoBatalla extends Observable{
         return acumuladorDefensa;
     }
 
+    //Salida por pantalla de los ataques y defensas
 
     private synchronized void mostrarAtaqueTurno(int acumA, int acumD) {
 
-        //Salida por pantalla de los ataques y defensas
         setChanged();
         notifyObservers(" "+atacanteG.getEjercito()+"\n");
         setChanged();
@@ -111,7 +133,7 @@ public class CampoBatalla extends Observable{
 
     }
 
-    //Funcion que decide como sigue la batalla, en caso de que ambos mueran, o alguno de ellos muera, se muestra
+    //Metodo que decide como sigue la batalla, en caso de que ambos mueran, o alguno de ellos muera, se muestra
     //quien gano y los contadores de las muertes de cada uno de ellos
     private void mostrarContadorFinal() {
         int acumuladorMuertes1 = 0;

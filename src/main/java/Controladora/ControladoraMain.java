@@ -37,7 +37,7 @@ public class ControladoraMain {
     public ControladoraMain() {
         //Seteo dos ejercitos que van a enfrentarse luego, se crean vacios y luego se le asignan soldados
         CampoBatalla campoB = new CampoBatalla();
-        Odin o=new Odin();
+        Odin o = new Odin();
         campoB.addObserver(o);
         ejercito1 = new Ejercito("Aleman");
         ejercito2 = new Ejercito("Ruso");
@@ -70,19 +70,19 @@ public class ControladoraMain {
         //para realizar una serie de pruebas
 
         //TODO corregir en caso de empate ataque y defensa
-        Soldado s1 = new Soldado(ia2, id1);  //Tiene ataque de Avion, se defiende con Casco
+        Soldado s1 = new Soldado(ia2, id1);  //Tiene ataque con Fusil, se defiende con Casco
         Soldado s2 = new Soldado(ia2, id2); //Tiene ataque con Fusil, se defiende con Chaleco
         Soldado s3 = new Soldado(ia2, id1);  //Tiene ataque con Fusil, se defiende con Casco
-        Soldado s4 = new Soldado(ia2, id2);
+        Soldado s4 = new Soldado(ia2, id2);  //Tiene ataque con Fusil, se defiende con Chaleco
         //Agrego soldados a los ejercitos
         ejercito1.add(s1);
         ejercito2.add(s2);
         ejercito2.add(s3);
         ejercito1.add(s4);
 
-
-        ejercito2.start();
+        //Comienza la ejecucion de los Hilos
         ejercito1.start();
+        ejercito2.start();
 
     }
 

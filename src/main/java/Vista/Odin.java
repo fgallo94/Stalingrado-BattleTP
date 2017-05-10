@@ -11,6 +11,8 @@ import java.util.Observer;
 public class Odin implements Observer {
     DaoBatalla dao= new DaoBatalla();
 
+    //Cuando creamos el Observer se muestra por pantalla los resultados de las batallas anteriores, llamando al
+    //dao.traerResultados()
     public Odin(){
         try {
             ArrayList<String> lista=dao.traerResultados();
@@ -25,7 +27,9 @@ public class Odin implements Observer {
         }
     }
 
-
+    //En el update del Observer checkea si lo que se envio en el Object o es una instancia de String o de Ejercito, si es
+    //instancia de String genera una salida por pantalla en base a ese string, si es una instancia de Ejercito hace una llamada
+    //a la base de datos con los datos del ejercito y los resultados de la batalla
     public void update(Observable observable, Object o) {
 
         if(o instanceof String){
