@@ -5,6 +5,7 @@ public class Soldado {
 
     public IAtaque iAtaque;
     public IDefensa iDefensa;
+
     //Clase que obtiene comportamientos de ataque y defensas previamente cargados, se pueden
     //iniciar sin comportamientos como tambien inicializarlos ya asignandole interfaces
     private int vida;

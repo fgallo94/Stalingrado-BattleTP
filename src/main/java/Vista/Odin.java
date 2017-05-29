@@ -10,19 +10,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Odin implements Observer {
-    DaoBatalla dao= new DaoBatalla();
-
+    DaoBatalla dao = new DaoBatalla();
+    FormVista f1=new FormVista();
     //Cuando creamos el Observer se muestra por pantalla los resultados de las batallas anteriores, llamando al
     //dao.traerResultados()
-    public Odin(){
+    public Odin() {
         try {
-            ArrayList<String> lista=dao.traerResultados();
-            if(lista != null){
+            ArrayList<String> lista = dao.traerResultados();
+            if (lista != null) {
                 System.out.println("Resultado de batallas anteriores \n\n");
+                f1.actualizarHistorial(lista);
             }
-            for (String s: lista) {
-                System.out.println(s+"\n");
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,42 +32,42 @@ public class Odin implements Observer {
     //a la base de datos con los datos del ejercito y los resultados de la batalla
     public void update(Observable observable, Object o) {
 
-        if(o instanceof String){
+        if (o instanceof String) {
 
-            try{
+            try {
                 Thread.sleep(500);
-            }catch(Exception es){
+            } catch (Exception es) {
                 es.printStackTrace();
             }
             System.out.println(o);
-        }else if(o instanceof Ejercito){
-            Ejercito aux = (Ejercito)o;
-            if (aux.getEjercito() == "Aleman"){
-                int acumuladorMuertes=0;
+        } else if (o instanceof Ejercito) {
+            Ejercito aux = (Ejercito) o;
+            if (aux.getEjercito() == "Aleman") {
+                int acumuladorMuertes = 0;
                 try {
-                    ArrayList<Soldado> auxSoldado=aux.getLista();
-                    for(Soldado s : auxSoldado) {
-                           if(s.getEstado()==0){
-                               acumuladorMuertes+=1;
-                           }
+                    ArrayList<Soldado> auxSoldado = aux.getLista();
+                    for (Soldado s : auxSoldado) {
+                        if (s.getEstado() == 0) {
+                            acumuladorMuertes += 1;
+                        }
                     }
 
                     dao.guardarResultado(aux, acumuladorMuertes, 2);
-                }catch (Exception z) {
+                } catch (Exception z) {
                     z.printStackTrace();
                 }
-            }else{
+            } else {
                 try {
-                    int acumuladorMuertes=0;
-                    ArrayList<Soldado> auxSoldado=aux.getLista();
-                    for(Soldado s : auxSoldado) {
-                        if(s.getEstado()==0){
-                            acumuladorMuertes+=1;
+                    int acumuladorMuertes = 0;
+                    ArrayList<Soldado> auxSoldado = aux.getLista();
+                    for (Soldado s : auxSoldado) {
+                        if (s.getEstado() == 0) {
+                            acumuladorMuertes += 1;
                         }
                     }
 
                     dao.guardarResultado(aux, 2, acumuladorMuertes);
-                }catch (Exception z) {
+                } catch (Exception z) {
                     z.printStackTrace();
                 }
             }

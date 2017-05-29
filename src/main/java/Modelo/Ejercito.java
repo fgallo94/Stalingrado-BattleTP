@@ -1,6 +1,5 @@
 package Modelo;
 
-
 import java.util.ArrayList;
 
 public class Ejercito extends Thread {
@@ -14,14 +13,14 @@ public class Ejercito extends Thread {
     public Ejercito(ArrayList<Soldado> lista, String ejercito) {
         this.lista = lista;
         this.ejercito = ejercito;
-        this.campoB=null;
+        this.campoB = null;
     }
 
     //Constructor con nombre de ejercito
     public Ejercito(String ejercito) {
         this.lista = new ArrayList<Soldado>();
         this.ejercito = ejercito;
-        this.campoB=null;
+        this.campoB = null;
     }
 
     //Respectivos Get y Set para cada uno de los atributos de la clase
@@ -53,8 +52,9 @@ public class Ejercito extends Thread {
         this.campoB = campoB;
     }
 
-    public void run (){
-        while(!campoB.isTermino()){
+    //Run del Thread, si la batalla no termino se ejecuta campoB.Enfrentar() con el ejercito de este Hilo
+    public void run() {
+        while (!campoB.isTermino()) {
             try {
                 campoB.enfrentar(this.ejercito);
             } catch (InterruptedException e) {

@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
 public class Conexion {
     //Contiene un objeto de tipo connection que viene de jdbc y una instancia estatica de nuestra clase
     private Connection conn;
@@ -19,6 +18,7 @@ public class Conexion {
         }
         return instancia;
     }
+
     //Verifica los drivers en la conexion
     public Conexion() {
         try {
@@ -30,6 +30,7 @@ public class Conexion {
             e.printStackTrace();
         }
     }
+
     //Conecta la base de datos con getConnection y los datos de nuestra base de datos, en caso de no poder ejectura la Excepcion
     public void conectar() throws SQLException {
         try {
@@ -39,6 +40,7 @@ public class Conexion {
             throw e;
         }
     }
+
     //verifica con el class.forName si el driver es el correcto
     private void verificarDriver() throws ClassNotFoundException {
         try {
@@ -48,6 +50,7 @@ public class Conexion {
             throw e;
         }
     }
+
     //Intenta desconectar la base de datos, en caso de no poder arroja excepcion
     public void desconectar() throws Exception {
         try {
@@ -58,6 +61,7 @@ public class Conexion {
             throw e;
         }
     }
+
     //get que retorna la conexion
     public Connection getConn() {
         return conn;

@@ -1,10 +1,10 @@
 package Modelo;
 
-
 import java.util.Observable;
 import java.util.Random;
+
 //clase que extiende de Observable
-public class CampoBatalla extends Observable{
+public class CampoBatalla extends Observable {
     private Ejercito ejer1;
     private Ejercito ejer2;
     private Ejercito atacanteG;
@@ -20,6 +20,7 @@ public class CampoBatalla extends Observable{
         termino = false;
         disponible = true;
     }
+
     //Respectivos getters and setters
     public Ejercito getEjer1() {
         return ejer1;
@@ -40,6 +41,7 @@ public class CampoBatalla extends Observable{
     boolean isTermino() {
         return termino;
     }
+
     //Metodo sincronizado que recibe a los Threads, en caso de que el boolean disponible sea igual a True ingresa y setea
     //ese disponible en false,si ingresa aleman, aleman ataca y defiende rusia, en caso contrario se invierte
     // hace una llamada al metodo atacar, llama al metodo sleepThread y notifica a los demas Threads cuando
@@ -64,14 +66,14 @@ public class CampoBatalla extends Observable{
     }
 
     //Metodo que duerme el Thread de 2 seg a 1
-    private synchronized void sleepThread(){
+    private synchronized void sleepThread() {
         Random rand = new Random();
         int rando = rand.nextInt(2500) + 1000;
-                try{
-                    Thread.sleep(rando);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+        try {
+            Thread.sleep(rando);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //Metodo atacar, compara si la batalla no finalizo para hacer sus respectivas tareas, si no finalizo, trae el ataque del agresot
@@ -79,22 +81,23 @@ public class CampoBatalla extends Observable{
     //guarda en un int el daño del agresor y llama a resultadoBatallaSinRemover() enviando el defensor y los puntos de daño
     // para finalizar llama mostrarContadorFinal() que nos dice como va la batalla y si finalizo
     private synchronized void atacar() {
-    if (!termino) {
-        int ataque = traerAtaque();
-        int defensa = traerDefensa();
-        saltoLinea();
-        mostrarAtaqueTurno(ataque, defensa);
-        int dañoCausado = ataque - defensa;
-        resultadoBatallaSinRemover(defensorG, dañoCausado);
-        mostrarContadorFinal();
+        if (!termino) {
+            int ataque = traerAtaque();
+            int defensa = traerDefensa();
+            saltoLinea();
+            mostrarAtaqueTurno(ataque, defensa);
+            int dañoCausado = ataque - defensa;
+            resultadoBatallaSinRemover(defensorG, dañoCausado);
+            mostrarContadorFinal();
         }
     }
+
     //Metodo para traer ataque del atacante, tiene ademas salida por pantalla mediante notifyObservers(), trae el ataque de
     //cada uno de los soldados de nuestro ejercito, y retorna ese acumulador
     private synchronized int traerAtaque() {
         int acumuladorAtaque = 0;
         setChanged();
-        notifyObservers(" "+atacanteG.getEjercito()+"\n");
+        notifyObservers(" " + atacanteG.getEjercito() + "\n");
         for (Soldado s : atacanteG.getLista()) {
             if (s.getEstado() != 0) {
                 acumuladorAtaque += s.getiAtaque();
@@ -102,19 +105,20 @@ public class CampoBatalla extends Observable{
                 notifyObservers("\n |||||||||||\n");
             }
         }
-        if(atacanteG.getEjercito().equals("Aleman")){
+        if (atacanteG.getEjercito().equals("Aleman")) {
             setChanged();
             notifyObservers("BONUS DE ATAQUE POR SER NAZI Y COMER LEVERWURST \n");
-            return acumuladorAtaque+5;
+            return acumuladorAtaque + 5;
         }
         return acumuladorAtaque;
     }
+
     //Metodo para traer defensa del defensor, tiene ademas salida por pantalla mediante el notifyObservers(), trae la defensa
     //de cada uno de los soldados de nuestro ejercito y retorna el acumulador
     private synchronized int traerDefensa() {
         int acumuladorDefensa = 0;
         setChanged();
-        notifyObservers(" "+defensorG.getEjercito()+"\n");
+        notifyObservers(" " + defensorG.getEjercito() + "\n");
         for (Soldado s : defensorG.getLista()) {
             if (s.getEstado() != 0) {
                 acumuladorDefensa += s.getiDefensa();
@@ -122,10 +126,10 @@ public class CampoBatalla extends Observable{
                 notifyObservers("\n |||||||||||\n");
             }
         }
-        if(defensorG.getEjercito().equals("Ruso")){
+        if (defensorG.getEjercito().equals("Ruso")) {
             setChanged();
             notifyObservers("BONUS DE DEFENSA POR SER RUSO Y TOMAR VODKA \n");
-            return acumuladorDefensa+5;
+            return acumuladorDefensa + 5;
         }
         return acumuladorDefensa;
     }
@@ -135,11 +139,11 @@ public class CampoBatalla extends Observable{
     private synchronized void mostrarAtaqueTurno(int acumA, int acumD) {
 
         setChanged();
-        notifyObservers(" "+atacanteG.getEjercito()+"\n");
+        notifyObservers(" " + atacanteG.getEjercito() + "\n");
         setChanged();
-        notifyObservers("\n El ataque del ejercito "+atacanteG.getEjercito()+  "fue de "+ acumA);
+        notifyObservers("\n El ataque del ejercito " + atacanteG.getEjercito() + "fue de " + acumA);
         setChanged();
-        notifyObservers("\n La defensa del otro ejercito fue de "+ acumD);
+        notifyObservers("\n La defensa del otro ejercito fue de " + acumD);
 
     }
 
@@ -174,22 +178,22 @@ public class CampoBatalla extends Observable{
             setChanged();
             notifyObservers("\n Contador:\n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            notifyObservers("\n Ejercito " + ejer1.getEjercito() + " \n Muertes: " + acumuladorMuertes1 + " \n Vivos: " + acumuladorVivos1 + " \n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
-            this.termino=true;
+            notifyObservers("\n Ejercito " + ejer2.getEjercito() + " \n Muertes: " + acumuladorMuertes2 + " \n Vivos: " + acumuladorVivos2 + "\n");
+            this.termino = true;
         } else if (acumuladorVivos1 == 0) {
             setChanged();
             notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
             setChanged();
-            notifyObservers("\n Gano el ejercito "+ ejer2.getEjercito());
+            notifyObservers("\n Gano el ejercito " + ejer2.getEjercito());
             setChanged();
             notifyObservers("\n Contador:\n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            notifyObservers("\n Ejercito " + ejer1.getEjercito() + " \n Muertes: " + acumuladorMuertes1 + " \n Vivos: " + acumuladorVivos1 + " \n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
-            this.termino=true;
+            notifyObservers("\n Ejercito " + ejer2.getEjercito() + " \n Muertes: " + acumuladorMuertes2 + " \n Vivos: " + acumuladorVivos2 + "\n");
+            this.termino = true;
             setChanged();
             notifyObservers(ejer2);
 
@@ -197,13 +201,13 @@ public class CampoBatalla extends Observable{
             setChanged();
             notifyObservers("\n@@@@@@@@@@ RESULTADOS @@@@@@@@@@@ ");
             setChanged();
-            notifyObservers("\n Gano el ejercito "+ ejer1.getEjercito());
+            notifyObservers("\n Gano el ejercito " + ejer1.getEjercito());
             setChanged();
             notifyObservers("\n Contador:\n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            notifyObservers("\n Ejercito " + ejer1.getEjercito() + " \n Muertes: " + acumuladorMuertes1 + " \n Vivos: " + acumuladorVivos1 + " \n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
+            notifyObservers("\n Ejercito " + ejer2.getEjercito() + " \n Muertes: " + acumuladorMuertes2 + " \n Vivos: " + acumuladorVivos2 + "\n");
             this.termino = true;
             setChanged();
             notifyObservers(ejer1);
@@ -216,9 +220,9 @@ public class CampoBatalla extends Observable{
             setChanged();
             notifyObservers("\n Contador:\n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer1.getEjercito()+ " \n Muertes: "+acumuladorMuertes1 +" \n Vivos: "+acumuladorVivos1+" \n" );
+            notifyObservers("\n Ejercito " + ejer1.getEjercito() + " \n Muertes: " + acumuladorMuertes1 + " \n Vivos: " + acumuladorVivos1 + " \n");
             setChanged();
-            notifyObservers("\n Ejercito "+ejer2.getEjercito()+ " \n Muertes: "+acumuladorMuertes2+" \n Vivos: "+acumuladorVivos2+"\n" );
+            notifyObservers("\n Ejercito " + ejer2.getEjercito() + " \n Muertes: " + acumuladorMuertes2 + " \n Vivos: " + acumuladorVivos2 + "\n");
 
 
         }
@@ -269,11 +273,11 @@ public class CampoBatalla extends Observable{
         }
         if (acumuladorMuertes != 0) {
             setChanged();
-            notifyObservers("\n Muertes ejercito "+e.getEjercito()+": "+ acumuladorMuertes+ " \n" );
+            notifyObservers("\n Muertes ejercito " + e.getEjercito() + ": " + acumuladorMuertes + " \n");
         }
         if (acumuladorDañados != 0) {
             setChanged();
-            notifyObservers("\n Heridos ejercito "+e.getEjercito()+ " : "+acumuladorDañados+ "\n" );
+            notifyObservers("\n Heridos ejercito " + e.getEjercito() + " : " + acumuladorDañados + "\n");
         }
     }
 
