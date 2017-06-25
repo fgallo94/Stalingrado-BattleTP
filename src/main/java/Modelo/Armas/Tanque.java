@@ -7,7 +7,7 @@ public class Tanque extends Ataques {
 
     //Constructor por defecto, contiene un ataque de valor 25 y un nombre descriptivo
     public Tanque() {
-        super(25, "Panzer");
+        super(22, "Panzer");
     }
 
     //Respectivos Get y Set de cada atributo

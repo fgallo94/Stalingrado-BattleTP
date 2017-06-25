@@ -7,8 +7,7 @@ public class Casco extends Defensa {
 
     //Constructor por defecto, que contiene una defensa de valor 5 y el nombre del casco
     public Casco() {
-        super(5, "Casco de Guerra");
-
+        super(10, "Casco de Guerra");
     }
 
     //Respectivo Get y Set de los atributos

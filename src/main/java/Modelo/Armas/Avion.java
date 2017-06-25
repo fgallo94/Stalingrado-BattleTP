@@ -7,8 +7,7 @@ public class Avion extends Ataques {
 
     //Constructor por defecto, contiene un ataque de valor 40 y un nombre descriptivo
     public Avion() {
-        super(40, "Avioneta de guerra");
-
+        super(25, "Avioneta de guerra");
     }
 
     //Respectivos Get y Set de cada atributo

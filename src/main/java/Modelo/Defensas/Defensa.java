@@ -38,7 +38,10 @@ public class Defensa implements IDefensa {
     //Metodo redefinido de la implementacion de IDefensa, imprime por pantalla el tipo de defensa y su valor
     //retorna el numero de defensa
     public int defender() {
-        System.out.printf("\n La defensa del soldado es %s, su defensa es igual a %d", this.nombre, getDefensa());
         return getDefensa();
+    }
+
+    public String obtenerDefensa() {
+        return nombre;
     }
 }

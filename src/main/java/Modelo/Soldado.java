@@ -16,7 +16,7 @@ public class Soldado {
     public Soldado() {
         vida = 10;
         defensa = 5;
-        estado=1;
+        estado = 1;
     }
 
     //Constructor con interfaces de ataque y defensa
@@ -25,7 +25,7 @@ public class Soldado {
         defensa = 5;
         iAtaque = ia;
         iDefensa = id;
-        estado=1;
+        estado = 1;
     }
 
     //Respectivos Get y Set para cada Atributo de la clase
@@ -63,6 +63,14 @@ public class Soldado {
 
     public int getDefensa() {
         return defensa;
+    }
+
+    public String getAtaque() {
+        return this.iAtaque.obtenerAtaque();
+    }
+
+    public String getIDefensa() {
+        return this.iDefensa.obtenerDefensa();
     }
 
     public void setDefensa(int defensa) {

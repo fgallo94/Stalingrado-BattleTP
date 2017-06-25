@@ -12,6 +12,7 @@ public class Ataques implements IAtaque {
     private int ataque;
     private String nombre;
 
+
     //Constructor copia
     public Ataques(int ataque, String nombre) {
         this.ataque = ataque;
@@ -28,7 +29,7 @@ public class Ataques implements IAtaque {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -38,7 +39,12 @@ public class Ataques implements IAtaque {
     //Metodo redefinido de la implementacion de IAtaque, imprime por pantalla el tipo de Ataque y su valor
     //retorna el numero de ataque
     public int atacar() {
-        System.out.printf("\n El soldado ataca con %s, su daño es igual a %d", this.nombre, getAtaque());
         return getAtaque();
     }
+
+    public String obtenerAtaque() {
+        return nombre;
+    }
+
+
 }

@@ -7,7 +7,7 @@ public class Chaleco extends Defensa {
 
     //Constructor por defecto, que contiene una defensa de valor 10 y el nombre del chaleco
     public Chaleco() {
-        super(10, "Chaleco antibalas camuflado");
+        super(15, "Chaleco antibalas camuflado");
     }
 
     //Respectivo Get y Set de los atributos

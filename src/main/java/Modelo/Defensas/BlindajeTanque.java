@@ -7,7 +7,7 @@ public class BlindajeTanque extends Defensa {
 
     //Constructor por defecto, que contiene una defensa de valor 25 y el nombre del tanque
     public BlindajeTanque() {
-        super(25, "Acero antibalas del tanque");
+        super(20, "Acero antibalas del tanque");
 
     }
 

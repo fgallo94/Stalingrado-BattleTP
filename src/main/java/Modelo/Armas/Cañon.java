@@ -6,7 +6,7 @@ public class Cañon extends Ataques {
 
     //Constructor por defecto, contiene un ataque de valor 15 y un nombre descriptivo
     public Cañon() {
-        super(15, "Cañon de disparos");
+        super(20, "Cañon de disparos");
 
     }
 
